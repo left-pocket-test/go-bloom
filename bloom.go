@@ -11,8 +11,8 @@ type BitSetProvider interface {
 }
 
 type BloomFilter struct {
-	m      int64  // the size(bit) for the BloomFilter
-	k      int64  // the hash function count
+	m      int64 // the size(bit) for the BloomFilter
+	k      int64 // the hash function count
 	bitSet BitSetProvider
 }
 

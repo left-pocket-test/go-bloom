@@ -8,7 +8,7 @@ import (
 )
 
 //const redisMaxLength int64 = 8 * 512 * 1024 * 1024  //512M
-const redisMaxLength int64 = 8 * 512 * 1024  //512K
+const redisMaxLength int64 = 8 * 512 * 1024 //512K
 
 type RedisBitSet struct {
 	keyPrefix string
@@ -49,11 +49,11 @@ func (r *RedisBitSet) Test(offsets []int64) (bool, error) {
 
 // Set Expire time if needed
 func (r *RedisBitSet) Expire(seconds uint) error {
-	max := int(r.m/redisMaxLength)
+	max := int(r.m / redisMaxLength)
 
 	for n := 0; n <= max; n++ {
 		key := fmt.Sprintf("%s:%d", r.keyPrefix, n)
-		_, err := r.client.Expire(key, time.Duration(seconds) * time.Second).Result()
+		_, err := r.client.Expire(key, time.Duration(seconds)*time.Second).Result()
 		if err != nil {
 			return err
 		}
@@ -63,7 +63,7 @@ func (r *RedisBitSet) Expire(seconds uint) error {
 
 // Delete all the keys
 func (r *RedisBitSet) Delete() error {
-	max := int(r.m/redisMaxLength)
+	max := int(r.m / redisMaxLength)
 	keys := make([]string, 0)
 	for n := 0; n <= max; n++ {
 		key := fmt.Sprintf("%s:%d", r.keyPrefix, n)
